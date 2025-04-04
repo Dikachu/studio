@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - EASY TREND LUXE</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Import the main stylesheet */
+        /* @import url('assets/css/style.css'); */
+        
+        /* Shop-specific styles */
+        .shop-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shop-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+        
+        .shop-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        
+        .shop-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .shop-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .shop-hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .shop-section {
+            padding: 6rem 0;
+            background-color: var(--secondary-color);
+        }
+        
+        /* Filter & Sort */
+        .filter-sort {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--accent-color);
+        }
+        
+        .filter-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 180px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 15px;
+            z-index: 10;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .filter-dropdown.active .filter-content {
+            display: block;
+        }
+        
+        .filter-option {
+            margin-bottom: 10px;
+        }
+        
+        .filter-option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .filter-option input {
+            margin-right: 8px;
+            width: auto;
+        }
+        
+        .filter-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-radius: 30px;
+            margin-right: 10px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-badge i {
+            cursor: pointer;
+        }
+        
+        .sort-by select {
+            padding: 10px 30px 10px 15px;
+            border: 1px solid #ddd;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M8 13.5l-8-8h16z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            cursor: pointer;
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .category-heading {
+            grid-column: 1 / -1;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+        
+        .category-heading:first-child {
+            margin-top: 0;
+        }
+        
+        /* Product Card Enhancements */
+        .product-card {
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            z-index: 5;
+        }
+        
+        .product-images {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+        }
+        
+        .product-image-main, .product-image-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+        
+        .product-image-hover {
+            opacity: 0;
+        }
+        
+        .product-card:hover .product-image-main {
+            opacity: 0;
+        }
+        
+        .product-card:hover .product-image-hover {
+            opacity: 1;
+        }
+        
+        .quick-shop {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            background-color: rgba(26,26,26,0.9);
+            color: var(--light-text);
+            text-align: center;
+            padding: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: bottom 0.3s ease;
+        }
+        
+        .product-card:hover .quick-shop {
+            bottom: 0;
+        }
+        
+        .product-colors {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .color-swatch {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .color-swatch:hover {
+            transform: scale(1.2);
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .product-card:hover .wishlist-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .wishlist-btn i {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .wishlist-btn.active i {
+            color: #e74c3c;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 4rem;
+            gap: 5px;
+        }
+        
+        .pagination a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .pagination a:hover, .pagination a.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        /* Product Quick View Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            z-index: 10;
+        }
+        
+        .modal-gallery {
+            padding: 30px;
+        }
+        
+        .modal-main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .modal-thumbnails {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .modal-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        
+        .modal-thumbnail.active {
+            border-color: var(--accent-color);
+        }
+        
+        .modal-details {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-product-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .modal-product-price {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .modal-product-desc {
+            margin-bottom: 20px;
+        }
+        
+        .modal-options {
+            margin-bottom: 20px;
+        }
+        
+        .option-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .size-option {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .size-option:hover, .size-option.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--light-text);
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .color-option.active::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 1px solid var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--light-text);
+        }
+        
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-left: none;
+            border-right: none;
+            text-align: center;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+        
+        .add-to-cart-btn {
+            flex: 1;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .wishlist-modal-btn {
+            width: 50px;
+            background-color: transparent;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-modal-btn:hover {
+            background-color: #f8f8f8;
+        }
+        
+        .wishlist-modal-btn.active i {
+            color: #e74c3c;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .modal-content {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+            
+            .modal-gallery, .modal-details {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .shop-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .filter-sort {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .size-options, .color-options {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">EASY TREND LUXE</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html" class="active">Shop</a></li>
+            <li><a href="studio.html">Studio</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="header-actions">
+            <div class="search-toggle">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="account-toggle">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="cart-toggle">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-count">3</span>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Search Overlay -->
+    <div class="search-overlay">
+        <div class="search-container">
+            <form class="search-form">
+                <input type="text" placeholder="Search for products...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="search-close"><i class="fas fa-times"></i></div>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="shop-hero">
+        <img src="assets/images/about_2.jpg" alt="Luxury Fashion Collection" class="shop-bg">
+        <div class="shop-overlay"></div>
+        <div class="shop-hero-content">
+            <h1>Luxury Collection</h1>
+            <p>Discover our curated selection of premium fashion, fragrances, and accessories</p>
+            <a href="#shop-main" class="btn btn-accent">Explore Collection</a>
+        </div>
+    </section>
+    
+    <!-- Main Shop Section -->
+    <section id="shop-main" class="shop-section">
+        <div class="container">
+            <!-- Filter & Sort -->
+            <div class="filter-sort">
+                <div class="active-filters">
+                    <span class="filter-badge">Women <i class="fas fa-times"></i></span>
+                    <span class="filter-badge">New Arrivals <i class="fas fa-times"></i></span>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">Category <i class="fas fa-chevron-down"></i></button>
+                        <div class="filter-content">
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Men</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox" checked> Women</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Accessories</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Fragrances</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">Price <i class="fas fa-chevron-down"></i></button>
+                        <div class="filter-content">
+                            <div class="filter-option">
+                                <label><input type="checkbox"> $0 - $100</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> $100 - $300</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> $300 - $500</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> $500+</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">Brand <i class="fas fa-chevron-down"></i></button>
+                        <div class="filter-content">
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Easy Trend</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Luxe Collection</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Premium Studio</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Designer Collab</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">Status <i class="fas fa-chevron-down"></i></button>
+                        <div class="filter-content">
+                            <div class="filter-option">
+                                <label><input type="checkbox" checked> New Arrivals</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Sale</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Bestsellers</label>
+                            </div>
+                            <div class="filter-option">
+                                <label><input type="checkbox"> Limited Edition</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sort-by">
+                    <select>
+                        <option>Featured</option>
+                        <option>Newest First</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Best Selling</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="products-grid">
+                <h3 class="category-heading">New Arrivals</h3>
+                
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">New</div>
+                        <img src="assets/images/product_1.jpg" alt="Silk Evening Dress" class="product-image-main">
+                        <img src="assets/images/product_1.jpg" alt="Silk Evening Dress - Back View" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="1">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Silk Evening Dress</h4>
+                        <div class="product-price">$495.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #000000;"></div>
+                            <div class="color-swatch" style="background-color: #C19A6B;"></div>
+                            <div class="color-swatch" style="background-color: #7B3F00;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">New</div>
+                        <img src="assets/images/product_2.jpg" alt="Cashmere Sweater" class="product-image-main">
+                        <img src="assets/images/product_2.jpg" alt="Cashmere Sweater - Side View" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="2">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Cashmere Sweater</h4>
+                        <div class="product-price">$320.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #F5F5DC;"></div>
+                            <div class="color-swatch" style="background-color: #36454F;"></div>
+                            <div class="color-swatch" style="background-color: #C19A6B;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">New</div>
+                        <img src="assets/images/product_3.jpg" alt="Designer Handbag" class="product-image-main">
+                        <img src="assets/images/product_3.jpg" alt="Designer Handbag - Open View" class="product-image-hover">
+                        <div class="wishlist-btn active">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="3">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Designer Tote Bag</h4>
+                        <div class="product-price">$780.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #000000;"></div>
+                            <div class="color-swatch" style="background-color: #8B4513;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">New</div>
+                        <img src="assets/images/product_5.jpg" alt="Statement Necklace" class="product-image-main">
+                        <img src="assets/images/product_5.jpg" alt="Statement Necklace - Close Up" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="4">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Statement Necklace</h4>
+                        <div class="product-price">$245.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #D4AF37;"></div>
+                            <div class="color-swatch" style="background-color: #C0C0C0;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="category-heading">Bestsellers</h3>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Bestseller</div>
+                        <img src="assets/images/product_4.jpg" alt="Signature Perfume" class="product-image-main">
+                        <img src="assets/images/product_4.jpg" alt="Signature Perfume - Open Box" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="5">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Signature Perfume</h4>
+                        <div class="product-price">$195.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #87CEFA;"></div>
+                            <div class="color-swatch" style="background-color: #FFB6C1;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Bestseller</div>
+                        <img src="assets/images/product_1.jpg" alt="Tailored Blazer" class="product-image-main">
+                        <img src="assets/images/product_1.jpg" alt="Tailored Blazer - Back View" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="6">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Tailored Wool Blazer</h4>
+                        <div class="product-price">$590.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #87CEFA;"></div>
+                            <div class="color-swatch" style="background-color: #FFB6C1;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Bestseller</div>
+                        <img src="assets/images/product_2.jpg" alt="Designer Sunglasses" class="product-image-main">
+                        <img src="assets/images/product_2.jpg" alt="Designer Sunglasses - Model Wearing" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="7">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Designer Sunglasses</h4>
+                        <div class="product-price">$350.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #000000;"></div>
+                            <div class="color-swatch" style="background-color: #8B4513;"></div>
+                            <div class="color-swatch" style="background-color: #800000;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Limited</div>
+                        <img src="assets/images/product_3.jpg" alt="Silk Scarf" class="product-image-main">
+                        <img src="assets/images/product_3.jpg" alt="Silk Scarf - Folded" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="8">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Printed Silk Scarf</h4>
+                        <div class="product-price">$190.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #ADD8E6;"></div>
+                            <div class="color-swatch" style="background-color: #FFB6C1;"></div>
+                            <div class="color-swatch" style="background-color: #F0E68C;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="category-heading">Limited Collection</h3>
+
+                <!-- Product 9 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Limited</div>
+                        <img src="assets/images/product_4.jpg" alt="Luxury Watch" class="product-image-main">
+                        <img src="assets/images/product_4.jpg" alt="Luxury Watch - Close Up" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="9">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Premium Chronograph Watch</h4>
+                        <div class="product-price">$1,290.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #FFD700;"></div>
+                            <div class="color-swatch" style="background-color: #C0C0C0;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 10 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Limited</div>
+                        <img src="assets/images/product_5.jpg" alt="Designer Heels" class="product-image-main">
+                        <img src="assets/images/product_5.jpg" alt="Designer Heels - Side View" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="10">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Designer Leather Heels</h4>
+                        <div class="product-price">$680.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #000000;"></div>
+                            <div class="color-swatch" style="background-color: #8B0000;"></div>
+                            <div class="color-swatch" style="background-color: #F5F5DC;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 11 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Limited</div>
+                        <img src="assets/images/product_1.jpg" alt="Luxury Cologne" class="product-image-main">
+                        <img src="assets/images/product_1.jpg" alt="Luxury Cologne - Box Set" class="product-image-hover">
+                        <div class="wishlist-btn active">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="11">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Premium Cologne for Men</h4>
+                        <div class="product-price">$210.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #2F4F4F;"></div>
+                            <div class="color-swatch" style="background-color: #000080;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 12 -->
+                <div class="product-card">
+                    <div class="product-images">
+                        <div class="product-badge">Limited</div>
+                        <img src="assets/images/product_2.jpg" alt="Leather Wallet" class="product-image-main">
+                        <img src="assets/images/product_2.jpg" alt="Leather Wallet - Open View" class="product-image-hover">
+                        <div class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="quick-shop" data-product="12">Quick Shop</div>
+                    </div>
+                    <div class="product-info">
+                        <h4>Premium Leather Wallet</h4>
+                        <div class="product-price">$175.00</div>
+                        <div class="product-colors">
+                            <div class="color-swatch" style="background-color: #000000;"></div>
+                            <div class="color-swatch" style="background-color: #8B4513;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#"><i class="fas fa-angle-right"></i></a>
+                </div>
+
+            </div><!-- End .products-grid -->
+
+            <!-- Newsletter Section -->
+            <div class="newsletter-section">
+                <div class="container">
+                    <div class="newsletter-content">
+                        <h3>Subscribe to our Newsletter</h3>
+                        <p>Be the first to know about new collections, exclusive offers, and fashion trends</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                            <button type="submit" class="newsletter-btn">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- End .container -->
+    </section><!-- End .shop-section -->
+
+    <!-- Quick Shop Modal -->
+    <div class="modal" id="quick-shop-modal">
+        <div class="modal-content">
+            <div class="modal-close"><i class="fas fa-times"></i></div>
+            
+            <div class="modal-gallery">
+                <img src="assets/images/product_1.jpg" alt="Product Image" class="modal-main-image">
+                <div class="modal-thumbnails">
+                    <img src="assets/images/product_1.jpg" alt="Thumbnail 1" class="modal-thumbnail active">
+                    <img src="assets/images/product_2.jpg" alt="Thumbnail 2" class="modal-thumbnail">
+                    <img src="assets/images/product_3.jpg" alt="Thumbnail 3" class="modal-thumbnail">
+                    <img src="assets/images/product_4.jpg" alt="Thumbnail 4" class="modal-thumbnail">
+                </div>
+            </div>
+            
+            <div class="modal-details">
+                <h2 class="modal-product-title">Silk Evening Dress</h2>
+                <div class="modal-product-price">$495.00</div>
+                <p class="modal-product-desc">
+                    Elegant silk evening dress with a timeless silhouette. Features a flattering neckline, 
+                    flowy skirt, and subtle side slit for ease of movement. Made from 100% natural silk with 
+                    a luxurious feel against the skin.
+                </p>
+                
+                <div class="modal-options">
+                    <label class="option-label">Size</label>
+                    <div class="size-options">
+                        <div class="size-option">XS</div>
+                        <div class="size-option active">S</div>
+                        <div class="size-option">M</div>
+                        <div class="size-option">L</div>
+                        <div class="size-option">XL</div>
+                    </div>
+                    
+                    <label class="option-label">Color</label>
+                    <div class="color-options">
+                        <div class="color-option active" style="background-color: #000000;"></div>
+                        <div class="color-option" style="background-color: #C19A6B;"></div>
+                        <div class="color-option" style="background-color: #7B3F00;"></div>
+                    </div>
+                </div>
+                
+                <div class="quantity-selector">
+                    <div class="quantity-btn minus"><i class="fas fa-minus"></i></div>
+                    <input type="number" value="1" min="1" class="quantity-input">
+                    <div class="quantity-btn plus"><i class="fas fa-plus"></i></div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <button class="wishlist-modal-btn"><i class="far fa-heart"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EASY TREND LUXE</h3>
+                    <p>Discover luxury fashion, premium fragrances, and bespoke studio experiences that define modern elegance.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Women's Collection</a></li>
+                        <li><a href="#">Men's Collection</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Fragrances</a></li>
+                        <li><a href="#">Limited Edition</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="studio.html">Studio Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Customer Care</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EASY TREND LUXE. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<!-- JavaScript -->
+<script>
+    // Filter Dropdowns
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const dropdown = this.closest('.filter-dropdown');
+            dropdown.classList.toggle('active');
+            
+            // Close other dropdowns
+            filterBtns.forEach(otherBtn => {
+                if (otherBtn !== btn) {
+                    otherBtn.closest('.filter-dropdown').classList.remove('active');
+                }
+            });
+        });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.filter-dropdown')) {
+            document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+    
+    // Quick Shop Modal
+    const quickShopBtns = document.querySelectorAll('.quick-shop');
+    const modal = document.getElementById('quick-shop-modal');
+    const modalClose = modal.querySelector('.modal-close');
+    
+    quickShopBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product');
+            // Here you would fetch the product data and update the modal content
+            // For now, we'll just show the modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    
+    modalClose.addEventListener('click', function() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Modal Thumbnails
+    const modalThumbnails = document.querySelectorAll('.modal-thumbnail');
+    const modalMainImage = document.querySelector('.modal-main-image');
+    
+    modalThumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            modalThumbnails.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            modalMainImage.src = this.src;
+            modalMainImage.alt = this.alt;
+        });
+    });
+    
+    // Quantity Selector
+    const minusBtn = document.querySelector('.quantity-btn.minus');
+    const plusBtn = document.querySelector('.quantity-btn.plus');
+    const quantityInput = document.querySelector('.quantity-input');
+    
+    minusBtn.addEventListener('click', function() {
+        let value = parseInt(quantityInput.value);
+        if (value > 1) {
+            quantityInput.value = value - 1;
+        }
+    });
+    
+    plusBtn.addEventListener('click', function() {
+        let value = parseInt(quantityInput.value);
+        quantityInput.value = value + 1;
+    });
+    
+    // Size Options
+    const sizeOptions = document.querySelectorAll('.size-option');
+    
+    sizeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            sizeOptions.forEach(o => o.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+    
+    // Color Options
+    const colorOptions = document.querySelectorAll('.color-option');
+    
+    colorOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            colorOptions.forEach(o => o.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+    
+    // Wishlist Toggle
+    const wishlistBtns = document.querySelectorAll('.wishlist-btn, .wishlist-modal-btn');
+    
+    wishlistBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+            }
+        });
+    });
+    
+    // Add animation delay to product cards
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach((card, index) => {
+        card.style.setProperty('--card-index', index);
+    });
+</script>
+<script src="script.js"></script>
+</body>
+</html>
