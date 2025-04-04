@@ -82,68 +82,6 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Mobile menu toggle
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
-
-menuToggle.addEventListener('click', function() {
-    navLinks.classList.toggle('active');
-});
-
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-        
-        // Close mobile menu if open
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-        }
-    });
-});
-
-// Product image hover effect
-const productCards = document.querySelectorAll('.product-card');
-productCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.querySelector('.product-overlay').style.opacity = 1;
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.querySelector('.product-overlay').style.opacity = 0;
-    });
-});
-
-// Basic form validation
-const contactForm = document.querySelector('.contact-form form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-        
-        if (!name || !email || !message) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        
-        alert('Thank you for your message! We will get back to you soon.');
-        this.reset();
-    });
-}
-
 // Add parallax scrolling effect
 window.addEventListener('scroll', function() {
     const parallaxElements = document.querySelectorAll('.about-image, .hero');
