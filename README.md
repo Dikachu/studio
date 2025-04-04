@@ -1,1 +1,1 @@
-# studio
+# EASY TREND LUXE 
